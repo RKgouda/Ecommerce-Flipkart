@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load cart %}
+
+{% block title %}
+  Order
+{% endblock %}
+
+{% block body %}
+<div class="container my-3">
+  <div class="container my-3">
+    <table class="table table-dark table-hover">
+      <tr class="text-center">
+        <th>S No.</th>
+        <th>Product Name</th>
+        <th>Product Image</th>
+        <th>product Price</th>
+        <th>Quantity</th>
+        <th>Total Price</th>
+      </tr>
+      {% for p in order %}
+        <tr class="text-center">
+          <th>{{ forloop.counter }}</th>
+          <th>{{ p.product.product_name }}</th>
+          <th>
+            <img src="{{ p.product.product_image.url }}" alt="" width="50" height="50" />
+          </th>
+          <th>Rs.{{ p.price }}</th>
+          <th>{{ p.quantity }}</th>
+          <th>Rs.{{p.price|order_total_price:p.quantity}}</th>
+        </tr>
+      {% endfor %}
+      <tr class="text-center">
+        <td colspan="4">
+          <h1>Payable Amount:</h1>
+        </td>
+        <td>Rs.{{tp}}</td>
+        <td>
+          <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#checkout">Pay</button>
+        </td>
+      </tr>
+    </table>
+</div>
+{% endblock %}
