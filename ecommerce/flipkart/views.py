@@ -49,6 +49,18 @@ def index(request):
     }
     return render(request, 'home.html',context=context)
 
+def contact(request):
+    context = {
+
+    }
+    return render(request, 'contact.html',context=context)
+
+def about(request):
+    context = {
+
+    }
+    return render(request, 'about.html',context=context)
+
 def sign_up(request):
     if request.method == 'POST':
         f_name = request.POST.get('fname')

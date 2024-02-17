@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "flipkart",
-    'rest_framework',
+    "rest_framework",
 ]
 
 MIDDLEWARE = [

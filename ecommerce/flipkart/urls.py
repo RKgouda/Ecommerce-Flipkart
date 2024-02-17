@@ -13,6 +13,8 @@ router.register(r'', views.RegistrationViewSet)
 
 urlpatterns = [
     path("",views.index,name="home"),
+    path("contact",views.contact,name="contact"),
+     path("about",views.about,name="about"),
     path("signup",views.sign_up, name="signup"),
     path("login",views.login, name="login"),
     path("logout",views.logout, name="logout"),
