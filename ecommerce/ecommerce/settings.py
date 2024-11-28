@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "flipkart",
     "rest_framework",
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [

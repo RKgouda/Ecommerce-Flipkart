@@ -23,7 +23,7 @@ class Category(models.Model):
 class Product(models.Model):
     product_image = models.ImageField(upload_to="uploads/product/")
     product_name = models.CharField(max_length=100,default='',null=True)
-    product_price = models.IntegerField(default=1)
+    product_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.01)
     product_desc = models.CharField(max_length=100,default='',null=True)
     product_category = models.ForeignKey(Category,on_delete=models.CASCADE)
 

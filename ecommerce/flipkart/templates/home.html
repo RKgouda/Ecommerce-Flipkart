@@ -1,80 +1,202 @@
-{% extends 'base.html' %}
-
-{% load cart %}
-{% load static %}
-{% block title %}
-  Flipkart
-{% endblock %}
-
-{% block body %}
-  {% comment %}This is for Crousel{% endcomment %}
-  <div class="container my-3">
-    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="{% static 'images\banner1.webp' %}" class="d-block w-100" alt="..." />
-        </div>
-        <div class="carousel-item">
-          <img src="{% static 'images\banner2.webp' %}" class="d-block w-100" alt="..." />
-        </div>
-        <div class="carousel-item">
-          <img src="{% static 'images\banner3.webp' %}" class="d-block w-100" alt="..." />
-        </div>
+{% extends 'base.html' %} {% load cart %} {% load static %} {% load humanize %} {% block title %}
+Flipkart {% endblock %} {% block body %} 
+{% comment %} this is for carousel {% endcomment %}
+<div class="container my-2">
+  <div
+    id="carouselExampleAutoplaying"
+    class="carousel slide"
+    data-bs-ride="carousel"
+  >
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img
+          src="{% static 'images/electronic.jpg' %}?v=2"
+          class="d-block h-80 w-100"
+          alt="..."
+        />
       </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
+      <div class="carousel-item">
+        <img
+          src="{% static 'images/Men-Women-Fashion.jpg' %}?v=2"
+          class="d-block h-80 w-100"
+          alt="..."
+        />
+      </div>
+      <div class="carousel-item">
+        <img
+          src="{% static 'images/indian-grocery.jpg' %}?v=2"
+          class="d-block h-80 w-100"
+          alt="..."
+        />
+      </div>
+    </div>
+    <button
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#carouselExampleAutoplaying"
+      data-bs-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#carouselExampleAutoplaying"
+      data-bs-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>
+
+
+{% comment %}this is show products{% endcomment %}
+<div class="container">
+  <div class="row text-center my-3">
+    <div class="col d-flex justify-content-center align-items-center">
+      <div class="card-show my-3" style="width: 20rem">
+      <img class="card-img-top" src="static\images\men fashion.jpg" alt="Card image cap" height="250"
+          width="20"/>
+      <div class="card-body">
+      <h5 class="card-title">Men Fashion</h5>
+      <a href="#" class="btn btn-primary">See more</a>
+      </div>
+    </div>
+  <div class="card-show my-3" style="width: 18rem">
+      <img class="card-img-top" src="static\images\Look Inverno.jpg" alt="Card image cap" height="250"
+          width="20" />
+      <div class="card-body">
+      <h5 class="card-title">Mens Winter Fashion</h5>
+      <br>
+      <a href="#" class="btn btn-primary">See more</a>
+      </div>
+  </div>
+  <div class="card-show my-3" style="width: 18rem">
+      <img class="card-img-top" src="static\images\shoos.jpg" alt="Card image cap" height="250"
+          width="20" />
+      <div class="card-body">
+      <h5 class="card-title">Shoos</h5>
+      <br>
+      <a href="#" class="btn btn-primary">See more</a>
+      </div>
+  </div>
+  <div class="card-show my-3" style="width: 18rem">
+      <img class="card-img-top" src="static\images\sharee.jpg" alt="Card image cap" height="250"
+          width="20" />
+      <div class="card-body">
+      <h5 class="card-title">Sharee</h5>
+      <br>
+      <a href="#" class="btn btn-primary">See more</a>
+      </div>
+  </div>
+   <div class="card-show my-3" style="width: 18rem">
+      <img class="card-img-top" src="static\images\womens-kurta.jpg" alt="Card image cap" height="250"
+          width="20" />
+      <div class="card-body">
+      <h5 class="card-title">Party Wear</h5>
+      <br>
+      <a href="#" class="btn btn-primary">See more</a>
+      </div>
+  </div>
     </div>
   </div>
-  {% comment %}this is all products{% endcomment %}
+</div>
 
-  <div class="container">
-    <div class="row text-center">
-      {% for pro in product %}
-        <div class="col">
-          <div class="card" style="width: 18rem;">
-            <img src="{{ pro.product_image.url }}" class="card-img-top" alt="..." height="350" width="20" />
-            <div class="card-body">
-              <h5 class="card-title">{{ pro.product_name }}</h5>
-              <p class="card-text">Rs.{{ pro.product_price }}</p>
-              <p class="card-text">{{ pro.product_desc }}</p>
+{% comment %}this is category{% endcomment %}
+<div class="container-fluid my-2 bg-secondary">
+  <div class="row text-center">
+    {% for cat in category %}
+    <div class="col">
+      <a href="?category_id={{ cat.id }}">
+        <img
+          src="{{ cat.category_image.url }}"
+          alt="No image"
+          width="50"
+          height="50"
+        />
+        <br />
+        <h5>{{ cat.category_name }}</h5>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% comment %}this is all products{% endcomment %}
+
+<div class="container">
+  <div class="row text-center my-3">
+    {% for pro in product %}
+    <div class="col">
+      <div
+        class="card my-3"
+        style="width: 22rem; height: 40rem; flex display: flex; flex-wrap: wrap;"
+      >
+        <img
+          src="{{ pro.product_image.url }}"
+          class="card-img-top"
+          alt="..."
+          height="380"
+          width="20"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ pro.product_name }}</h5>
+          <p class="card-text">Rs.{{ pro.product_price|floatformat:2|intcomma }}</p>
+          <p class="card-text">{{ pro.product_desc }}</p>
+        </div>
+        <div class="card-footer text-body-secondary">
+          {% if pro|isexistsincart:request.session.cart %}
+          <div class="row">
+            <div class="col-2">
+              <form action="" method="post">
+                {% csrf_token %}
+                <input
+                  type="text"
+                  name="productid"
+                  value="{{ pro.id }}"
+                  hidden
+                />
+                <input type="text" name="remove" value="{{ pro.id }}" hidden />
+                <input type="Submit" value="-" class="btn btn-primary" />
+              </form>
             </div>
-            <div class="card-footer text-body-secondary">
-              {% if pro|isexistsincart:request.session.cart %}
-                <div class="row">
-                  <div class="col-2">
-                    <form action="" method="post">
-                      {% csrf_token %}
-                      <input type="text" name="productid" value="{{ pro.id }}" hidden />
-                      <input type="text" name="remove" value="{{ pro.id }}" hidden />
-                      <input type="Submit" value="-" class="btn btn-primary" />
-                    </form>
-                  </div>
-                  <div class="col-8">{{ pro|cart_quantity:request.session.cart }}</div>
-                  <div class="col-2">
-                    <form action="" method="post">
-                      {% csrf_token %}
-                      <input type="text" name="productid" value="{{ pro.id }}" hidden />
-                      <input type="Submit" value="+" class="btn btn-primary" />
-                    </form>
-                  </div>
-                </div>
-              {% else %}
-                <form action="" method="post">
-                  {% csrf_token %}
-                  <input type="text" name="productid" value="{{ pro.id }}" hidden />
-                  <input type="Submit" value="Add to Cart" class="btn btn-primary" />
-                </form>
-              {% endif %}
+            <div class="col-8">
+              {{ pro|cart_quantity:request.session.cart }}
+            </div>
+            <div class="col-2">
+              <form action="" method="post">
+                {% csrf_token %}
+                <input
+                  type="text"
+                  name="productid"
+                  value="{{ pro.id }}"
+                  hidden
+                />
+                <input type="Submit" value="+" class="btn btn-primary" />
+              </form>
             </div>
           </div>
+          {% else %}
+          <form action="" method="post">
+            {% csrf_token %}
+            <input type="text" name="productid" value="{{ pro.id }}" hidden />
+            <input type="Submit" value="Add to Cart" class="btn btn-primary" />
+          </form>
+          {% endif %}
         </div>
-      {% endfor %}
+      </div>
     </div>
+    {% endfor %}
   </div>
+</div>
+
+<div class="footer">
+  <footer
+    class="container-fluid text-body-secondary bg-secondary my-5 text-center"
+  >
+    Copyright : 2024 || Develop by: Ranjit @RKG
+  </footer>
+</div>
 {% endblock %}

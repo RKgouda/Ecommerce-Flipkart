@@ -4,6 +4,7 @@ from django.shortcuts import render,redirect,HttpResponse
 # Create your views here.
 from .models import *
 from django.contrib.auth.hashers import check_password,make_password
+from django.shortcuts import get_object_or_404
 
 def index(request):
     if request.method == 'POST':
@@ -61,6 +62,29 @@ def about(request):
     }
     return render(request, 'about.html',context=context)
 
+def validateCustomer(customer):
+    error_messagge = None
+    if (not customer.first_name):
+        error_messagge = "Please Enter your First Name !!"
+    elif len(customer.first_name) < 3:
+        error_messagge = "First Name must be 3 Charater long or more"
+    elif not customer.last_name:
+        error_messagge = "Please Enter your Last Name"
+    elif len(customer.last_name) < 3:
+        error_messagge = "Last Name must be 3 Charater long or more"
+    elif not customer.phone:
+        error_messagge = "Please Enter your Phone Number"
+    elif len(customer.phone) < 10:
+        error_messagge = "Phone Number must be 10 disite long"
+    elif len(customer.password) < 5:
+        error_messagge = "Password must be 5 character long"
+    elif len(customer.email) < 5:
+        error_messagge = "Email Address must be 5 character long"
+    elif customer.isExists():
+        error_messagge = "Email Address already registered"
+    return error_messagge
+
+
 def sign_up(request):
     if request.method == 'POST':
         f_name = request.POST.get('fname')
@@ -70,18 +94,53 @@ def sign_up(request):
         mobile = request.POST.get('mbl')
         gender = request.POST.get('gender')
 
-        reg_obj = Registration(
+        # validation
+        value = {
+            'first_name': first_name,
+            'last_name': last_name,
+            'mobile': mobile,
+            'email': email,
+            'gender': gender
+        }
+        print(value)
+        error_message = None
+
+        customer = Registration(
             first_name=f_name,
             last_name=l_name,
             email=email,
-            password=make_password(password),
+            password=password,
             mobile=mobile,
-            gender=gender
-        )
+            gender=gender)
+        error_message = validateCustomer(customer)
 
-        reg_obj.save()
+        if not error_message:
+            print(first_name, last_name, mobile, email, password, gender)
+            customer.password = make_password(customer.password)
+            customer.register()
+            return redirect('home')
+        else:
 
-        return redirect('home')
+            data = {
+                'error': error_message,
+                'values': value,
+                'category_obj': contents.get('category_obj'),
+                'product_obj': contest.get('product_obj')
+            }
+            return render(request, 'home.html', data)
+
+        # reg_obj = Registration(
+        #     first_name=f_name,
+        #     last_name=l_name,
+        #     email=email,
+        #     password=make_password(password),
+        #     mobile=mobile,
+        #     gender=gender
+        # )
+
+        # reg_obj.save()
+
+        # return redirect('home')
 
 def login(request):
     if request.method == "POST":
@@ -138,7 +197,19 @@ def checkout(request):
             )
             order_obj.save()
         return redirect('order')
+    
+# Delete-------------
+def delete_order(request, order_id):
+    # Ensure the user is authenticated
+    customer_id = request.session.get('customer_id')
+    if not customer_id:
+        return redirect('login')
 
+    order = get_object_or_404(Order, id=order_id, customer_id=customer_id)
+    order.delete()
+
+    return redirect('order') 
+    
 def order_details(request):
     customer_id = request.session.get('customer_id')
 

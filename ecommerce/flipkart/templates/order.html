@@ -13,9 +13,10 @@
         <th>S No.</th>
         <th>Product Name</th>
         <th>Product Image</th>
-        <th>product Price</th>
+        <th>Product Price</th>
         <th>Quantity</th>
         <th>Total Price</th>
+        <th>Delete</th>
       </tr>
       {% for p in order %}
         <tr class="text-center">
@@ -27,7 +28,14 @@
           <th>Rs.{{ p.price }}</th>
           <th>{{ p.quantity }}</th>
           <th>Rs.{{p.price|order_total_price:p.quantity}}</th>
+          <th>
+              <form action="{% url 'delete_order' p.id %}" method="post">
+                {% csrf_token %}
+              <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+          </th>
         </tr>
+
       {% endfor %}
       <tr class="text-center">
         <td colspan="4">
